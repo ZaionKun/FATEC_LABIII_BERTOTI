@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>LOL</title>
+	
+    
+	<script src="js/jquery.js"></script>
+	
+
+	<link href="css/bootstrap.min.css" rel=stylesheet>
+	
+	
+	<script>
+		$(document).ready(function(){
+			
+
+			$("#busca").click(function() {
+
+				var tipo = $( "#tipo option:selected" ).text();
+				var lane = $( "#lane option:selected" ).text();
+				var dano = $( "#dano option:selected" ).text();
+					
+				$("#dadosCampeao").empty();
+					
+				var url = "/campeao/"+tipo+"/"+lane+"/"+dano+"";
+					
+
+				$.getJSON(url, function(data) {
+						
+						var itens = [];
+						
+						$.each(data, function(i){
+						
+							itens.push("<tr> <td>"+ this.nome +"</td><td>"+ this.espc.tipo + "</td><td>"+ this.espc.lane + "</td><td>"+ this.espc.dano + "</td></tr>");
+							
+						});
+									
+						$("#dadosCampeao").append(itens);
+						
+				});
+
+			});
+
+		});
+
+	</script>
+
+   
+  </head>
+
+
+  <body>
+		
+
+  		<div id="painelBusca">
+            
+		
+		
+            <div class="form-group col-md-4">
+                <label>Tipo</label>
+                <select id="tipo" class="input-large form-control">
+                    <option value="" selected="selected">Escolha o tipo</option>
+                    <option value="assas">Assassino</option>
+                    <option value="mago">Mago</option>
+                    <option value="lut">Lutador</option>
+                    <option value="adc">Atirador</option>
+                    <option value="sup">Suporte</option>
+                    <option value="tank">Tanque</option>
+                    
+                </select>
+            </div>
+		
+		
+		
+            <div class="form-group col-md-4">
+                <label>Lane</label>
+                <select id="lane" class="input-large form-control">
+                    <option value="" selected="selected">Escolha a lane</option>
+                    <option value="mid">Mid</option>
+                    <option value="topjg">Top ou Jungle</option>
+                    <option value="bot">Bot</option>
+                    
+                </select>
+            </div>
+		
+		
+		
+            <div class="form-group col-md-4">
+                <label>Dano</label>
+                <select id="dano" class="input-large form-control">
+                    <option value="" selected="selected">Escolha o dano</option>
+                    <option value="magico">Magico</option>
+                    <option value="fisico">Fisico</option>
+                    
+                </select>
+            </div>
+		
+		</div>
+		
+		<button id="busca" class="btn btn-primary col-md-offset-5">Buscar</button>
+		
+		<table class="table table-bordered"> 
+			<caption>Campeoes</caption>
+				<thead>
+					<tr> 
+						<th>Nome</th>
+						<th>Tipo</th> 
+						<th>Lane</th> 
+						<th>Dano</th> 
+					</tr> 
+				</thead> 
+				
+				<tbody id="dadosCampeao"> 
+					
+				</tbody> 
+		</table>
+
+		
+  </body>
+  
+</html>
